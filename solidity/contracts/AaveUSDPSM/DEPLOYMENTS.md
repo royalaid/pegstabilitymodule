@@ -12,7 +12,7 @@
 
 - `gem` is the aToken. `pool` and `underlying` are derived from the aToken itself at init (`POOL()` / `UNDERLYING_ASSET_ADDRESS()`), so the initializer cannot be mis-wired against a mismatched pair.
 - Target Polygon aToken: `0xA4D94019934D8333Ef880ABFFbF2FDd611C762BD` (aPolUSDCn, native USDC at `0x3c49...3359`, pool at `0x794a...14aD`). Verified on-chain 2026-04-22.
-- **Migration implication**: `BeefyVaultPSMPoly/V1` holds bridged USDC.e; this PSM expects native USDC. The governance-driven migration must swap USDC.e → USDC before seeding.
+- **Migration implication**: `BeefyVaultPSMPoly/V1` and this PSM share the **same native-USDC underlying** (`0x3c49…3359`). Verified 2026-04-23 via `cast call 0x6d01…3453a underlying()`. The governance-driven migration is a direct transferToken → seed → sweep — no token swap needed. Earlier drafts of this doc claimed USDC.e; that was wrong and has been corrected in the sibling plan + solution docs.
 - Deploy script runs `AaveUSDPSMPreflight.validateInitParams` in the same `run()` before `vm.startBroadcast`, so mis-wiring aborts the simulation.
 
 ## Init parameters (as broadcast)
