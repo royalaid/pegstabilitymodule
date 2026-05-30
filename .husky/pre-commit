@@ -8,4 +8,4 @@
 # is already covered by CI on every PR, and `yarn test:local` implicitly
 # rebuilds before any local test run. Run `yarn build` manually when you
 # specifically want to validate compile without running tests.
-npx lint-staged
+pnpm exec lint-staged

@@ -18,20 +18,23 @@ jobs:
         with:
           version: nightly
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile --network-concurrency 1
+        run: pnpm install --frozen-lockfile
 
       - name: Precompile
-        run: yarn build
+        run: pnpm build
 
       - name: Run tests (local, mock-based, no RPC)
-        run: yarn test:local
+        run: pnpm test:local
       # The parked fork-based suites under solidity/test/{unit,integration}
       # (DAI, Metis, zkEVM PSMs) are NOT run in CI. To exercise them
       # manually, set MAINNET_RPC locally and run `yarn test:fork`.
@@ -52,13 +55,16 @@ jobs:
         with:
           version: nightly
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile --network-concurrency 1
+        run: pnpm install --frozen-lockfile
 
-      - run: yarn lint:check
+      - run: pnpm lint:check
